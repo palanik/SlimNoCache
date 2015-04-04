@@ -5,10 +5,11 @@ namespace SlimNoCache;
 class SlimNoCache extends \Slim\Middleware {
 
     public function call() {
+    	$rsp = $this->app->response();
+    	
     	// Based on http://stackoverflow.com/a/13640164
-        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
+        $rsp->headers->set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0");
+        $rsp->headers->set("Pragma", "no-cache");
 
         $this->next->call();
     }
